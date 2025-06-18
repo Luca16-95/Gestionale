@@ -42,9 +42,4 @@ public class AuthController {
         return "register-admin";
     }
 
-    // @GetMapping("/eventi")
-    // public String eventi() {
-    // return "eventi";
-    // }
-
 }
