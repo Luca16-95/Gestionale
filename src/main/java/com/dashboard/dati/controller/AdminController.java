@@ -1,15 +1,24 @@
 package com.dashboard.dati.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import com.dashboard.dati.model.User;
+import com.dashboard.dati.model.enums.Role;
 import com.dashboard.dati.registerDto.RegisterAdminDto;
+import com.dashboard.dati.registerDto.UserDTO;
 import com.dashboard.dati.service.UserService;
 
-@RestController
+@Controller
 @RequestMapping("/admin")
 public class AdminController {
 
@@ -19,7 +28,19 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
+    @GetMapping("/dashboard")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String adminDashboard() {
+        return "admin-dashboard";
+    }
+
+    @GetMapping("/register-admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String showAdminRegistrationForm() {
+        return "register-admin";
+    }
+
+    @PostMapping("/register-admin")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> registerAdmin(@ModelAttribute RegisterAdminDto dto) {
         boolean success = userService.registerAdmin(dto.getUsername(), dto.getPassword());
@@ -27,6 +48,46 @@ public class AdminController {
             return ResponseEntity.ok("Admin registrato con successo");
         } else {
             return ResponseEntity.badRequest().body("Username già esistente");
+        }
+    }
+
+    @GetMapping("/register-user")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String showUserRegistrationForm() {
+        return "register-user";
+    }
+
+    @PostMapping("/register-user")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String registerNewUser(@ModelAttribute UserDTO userDTO, Model model) {
+        Optional<Role> role = parseRole(userDTO.getRole());
+        if (role.isEmpty()) {
+            model.addAttribute("error", "Ruolo non valido");
+            return "register-user"; // torna al form con messaggio d'errore
+        }
+
+        boolean created = userService.registerUser(userDTO.getUsername(), userDTO.getPassword(), role.get());
+        if (!created) {
+            model.addAttribute("error", "Username già esistente");
+            return "register-user";
+        }
+
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String listUsers(Model model) {
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "users-list";
+    }
+
+    private Optional<Role> parseRole(String roleString) {
+        try {
+            return Optional.of(Role.valueOf(roleString.toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            return Optional.empty();
         }
     }
 

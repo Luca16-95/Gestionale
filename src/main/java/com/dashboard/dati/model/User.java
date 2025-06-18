@@ -1,6 +1,10 @@
 package com.dashboard.dati.model;
 
+import com.dashboard.dati.model.enums.Role;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,6 +24,6 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    // @Enumerated(EnumType.STRING)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

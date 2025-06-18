@@ -25,7 +25,7 @@ public class CustomUserDetails implements UserDetailsService {
             throw new UsernameNotFoundException("user not found with givn username");
         }
         return org.springframework.security.core.userdetails.User.withUsername(user.getUsername())
-                .password(user.getPassword()).roles(user.getRole()).build();
+                .password(user.getPassword()).roles(user.getRole().getAuthority()).build();
 
     }
 

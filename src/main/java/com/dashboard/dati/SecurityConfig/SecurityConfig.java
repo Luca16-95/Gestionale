@@ -22,12 +22,13 @@ public class SecurityConfig {
 
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
-                        request -> request.requestMatchers("/register", "/login", "/home").permitAll()
+                        request -> request.requestMatchers("/register", "/login", "/home")
+                                .permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN") // entrambi possono accedere
                                 .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/eventi", true).permitAll())
+                        .defaultSuccessUrl("/postLogin", true).permitAll())
                 .logout(logout -> logout.logoutSuccessUrl("/login").permitAll()).userDetailsService(customUserDetails);
 
         return http.build();

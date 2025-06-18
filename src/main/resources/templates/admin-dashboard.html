@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard Admin</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+      }
+      h1 {
+        color: #333;
+      }
+      nav a {
+        display: inline-block;
+        margin: 10px 15px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+      nav a:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Benvenuto nell'area Admin</h1>
+
+    <nav>
+      <a th:href="@{/admin/register-admin}">Registra nuovo Admin</a>
+      <a th:href="@{/admin/register-user}">Registra nuovo Utente</a>
+      <a th:href="@{/admin/users}">Lista Utenti</a>
+      <!-- aggiungi altri link alle tue pagine / controller -->
+    </nav>
+
+    <form th:action="@{/logout}" method="post" style="margin-top: 30px">
+      <button type="submit">Logout</button>
+    </form>
+  </body>
+</html>

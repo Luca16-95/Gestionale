@@ -1,12 +1,12 @@
 package com.dashboard.dati.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.dashboard.dati.model.enums.Role;
 import com.dashboard.dati.service.UserService;
 
 @Controller
@@ -22,7 +22,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public String registerUser(@RequestParam String username, String password) {
-        userService.registerUser(username, password);
+        userService.registerUser(username, password, Role.ADMIN);
         return "redirect:/login";
     }
 
@@ -34,12 +34,6 @@ public class AuthController {
     @GetMapping("/home")
     public String home() {
         return "home";
-    }
-
-    @GetMapping("/admin/register")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String showAdminRegistrationForm() {
-        return "register-admin";
     }
 
 }

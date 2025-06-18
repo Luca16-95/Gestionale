@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Registrazione Utente</title>
+  </head>
+  <body>
+    <h2>Registrazione nuovo utente</h2>
+
+    <form action="/admin/register-user" method="post">
+      <label for="username">Username:</label><br />
+      <input type="text" id="username" name="username" required /><br /><br />
+
+      <label for="password">Password:</label><br />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+      /><br /><br />
+
+      <label for="role">Ruolo:</label><br />
+      <select id="role" name="role" required>
+        <option value="">--Seleziona ruolo--</option>
+        <option value="ADMIN">Admin</option>
+        <option value="USER">User</option>
+        <option value="EMPLOYEE">Employee</option>
+        <option value="MANAGER">Manager</option>
+        <option value="AUDITOR">Auditor</option></select
+      ><br /><br />
+
+      <button type="submit">Registra</button>
+    </form>
+
+    <!-- Messaggio di errore (eventualmente popolato dal server) -->
+    <div style="color: red">
+      <!-- Qui puoi mostrare l'errore passato dal model, esempio in Thymeleaf:
+             <p th:text="${error}"></p> -->
+    </div>
+  </body>
+</html>
