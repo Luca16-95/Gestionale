@@ -32,7 +32,6 @@ Visita http://localhost:8080
 Stato del progetto
 ⚠️ Work in progress — il progetto è in fase di sviluppo e alcune funzionalità potrebbero non essere ancora complete.
 
-Contributi
 Contributi e suggerimenti sono benvenuti! Apri pure issue o pull request.
 
 Autore: Luca16-95
