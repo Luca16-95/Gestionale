@@ -32,19 +32,6 @@ public class UserService {
         return true;
     }
 
-    public boolean registerAdmin(String username, String password) {
-        if (userRepository.findByUsername(username) != null) {
-            return false; // già esiste
-        }
-
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setRole(Role.ADMIN);
-        userRepository.save(user);
-        return true;
-    }
-
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Lista Fatture</title>
+  </head>
+  <body>
+    <h1>Lista Fatture</h1>
+
+    <table border="1" cellpadding="5" cellspacing="0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Descrizione</th>
+          <th>Importo</th>
+          <th>IVA %</th>
+          <th>Data</th>
+          <th>Tipo</th>
+          <th>Creato da</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="invoice : ${invoices}">
+          <td th:text="${invoice.id}">1</td>
+          <td th:text="${invoice.description}">Descrizione</td>
+          <td th:text="${invoice.amount}">100.00</td>
+          <td th:text="${invoice.ivaPercentage}">22</td>
+          <td th:text="${#temporals.format(invoice.date, 'dd/MM/yyyy')}">
+            19/06/2025
+          </td>
+          <td th:text="${invoice.type}">Tipo</td>
+          <td th:text="${invoice.createdBy.username}">Mario</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+
+    <a href="/invoice/create">
+      <button type="button">Crea nuova fattura</button>
+    </a>
+  </body>
+</html>

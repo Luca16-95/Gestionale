@@ -22,7 +22,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public String registerUser(@RequestParam String username, String password) {
-        userService.registerUser(username, password, Role.ADMIN);
+        userService.registerUser(username, password, Role.USER);
         return "redirect:/login";
     }
 

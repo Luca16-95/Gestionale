@@ -15,7 +15,10 @@ public class PostLoginController {
         } else if (authentication.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
             return "redirect:/user/home";
+        } else if (authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_EMPLOYEE"))) {
+            return "redirect:/invoice/invoices";
         }
-        return "redirect:/default"; // fallback
+        return "redirect:/default";
     }
 }

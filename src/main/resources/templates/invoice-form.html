@@ -1,0 +1,16 @@
+<form th:action="@{/invoice}" th:object="${invoice}" method="post">
+  <input type="text" th:field="*{description}" placeholder="Descrizione" />
+  <input type="number" step="0.01" th:field="*{amount}" placeholder="Importo" />
+  <input
+    type="number"
+    step="0.01"
+    th:field="*{ivaPercentage}"
+    placeholder="IVA (%)"
+  />
+  <input type="date" th:field="*{date}" />
+  <select th:field="*{type}">
+    <option value="EXPENSE">Uscita</option>
+    <option value="INCOME">Entrata</option>
+  </select>
+  <button type="submit">Crea Fattura</button>
+</form>

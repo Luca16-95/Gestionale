@@ -3,7 +3,6 @@ package com.dashboard.dati.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dashboard.dati.model.User;
 import com.dashboard.dati.model.enums.Role;
-import com.dashboard.dati.registerDto.RegisterAdminDto;
 import com.dashboard.dati.registerDto.UserDTO;
 import com.dashboard.dati.service.UserService;
 
@@ -32,23 +30,6 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     public String adminDashboard() {
         return "admin-dashboard";
-    }
-
-    @GetMapping("/register-admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String showAdminRegistrationForm() {
-        return "register-admin";
-    }
-
-    @PostMapping("/register-admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> registerAdmin(@ModelAttribute RegisterAdminDto dto) {
-        boolean success = userService.registerAdmin(dto.getUsername(), dto.getPassword());
-        if (success) {
-            return ResponseEntity.ok("Admin registrato con successo");
-        } else {
-            return ResponseEntity.badRequest().body("Username già esistente");
-        }
     }
 
     @GetMapping("/register-user")
